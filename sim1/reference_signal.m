@@ -34,5 +34,4 @@ function res = reference_signal(t)
         res = 0;
         return;
     end
-
 end

@@ -7,42 +7,19 @@ set(groot, 'defaultFigureUnits', 'points', 'defaultFigurePosition', [20 20 700*1
 set(groot, 'DefaultLineLineWidth', 1);
 
 %% real system
-Ap = [  -0.8060       1     ;
-            -9.1486   -4.59  ];
-Bp = [   -0.04;      -4.59  ];
-Cp = [       1;           0     ];
-
-% % x_dot = @(x, u) Ap * x + Bp * u;
-% % % y = @(x) Cp' * x;
-% % 
-% % % x = [0; 0];
-% % % u = 0;
-% % % r = 0;
-% % 
-% % % x_dot(x, u)
-% % % y(x)
-% % 
-% % 
-% % x = @(t) [cos(t); sin(t)];
-% % y = @(t) cos(t);
-% % r = @(t) sin(t);
-% % 
-% % e_y = @(t) y(t) - r(t);
-% % e_yi = @(t) integral(@(t) e_y(t), 0, t);
-% % 
-% % z = @(t) [e_yi(t); x(t)];
-% %    
+Ap = [-0.8060 1;
+    -9.1486 -4.59];
+Bp = [-0.04; -4.59];
+Cp = [1; 0];
 
 %% model
 np = length(Ap);
 
-% Am = [ -15  -2  ;
-%             -3   -4  ];  
 Bm = zeros(np, 1);
 Cm = Cp;
 
 %% controller
-K = [   3  ;     2   ;   1  ];
+K = [3; 2; 1];
 
 %% augmented model
 Am_tilde = [0 Cp'; zeros(2, 1) Ap] + [0; Bp] * K';
@@ -72,7 +49,7 @@ zp0 = [0; 0; 0];
 yp = Cp_tilde' * zp';
 u = K' * zp';
 
-% plots
+%% plots
 figure;
 hold on;
 fplot(r2deg, t_span, 'Linewidth', 1);
@@ -84,9 +61,9 @@ xlabel('time (s)');
 ylabel('angle (deg)');
 legend('$r$', '$y_m$', '$y_p$');
 
-figure;
-plot(t, rad2deg(yp-ym));
-legend('$e$');
+% figure;
+% plot(t, rad2deg(yp-ym));
+% legend('$e$');
 
 figure;
 plot(t, rad2deg(u));
@@ -94,4 +71,3 @@ grid on;
 xlabel('time (s)');
 ylabel('angle (deg)');
 legend('$u$');
-

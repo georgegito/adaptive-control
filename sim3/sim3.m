@@ -7,10 +7,10 @@ set(groot, 'defaultFigureUnits', 'points', 'defaultFigurePosition', [20 20 700*1
 set(groot, 'DefaultLineLineWidth', 1);
 
 %% real system
-Ap = [  -0.8060       1     ;
-            -9.1486   -4.59  ];
-Bp = [   -0.04;      -4.59  ];
-Cp = [       1;           0     ];
+Ap = [-0.8060 1;
+    -9.1486 -4.59];
+Bp = [-0.04; -4.59];
+Cp = [1; 0];
 
 % uncertainties
 D =0.5;
@@ -25,20 +25,20 @@ Bm = zeros(np, 1);
 Cm = Cp;
 
 %% augmented model
-Am_tilde = [      0                         1                         0     ;
-                     -0.12                    -0.886                   0.96  ;
-                    -13.77                  -18.3286              -9.18  ];
-Bm_tilde = [    -1  ;   Bm  ];
-Cm_tilde = [    0   ;  Cm   ];
+Am_tilde = [0 1 0;
+    -0.12 -0.886 0.96  ;
+    -13.77 -18.3286 -9.18];
+Bm_tilde = [-1; Bm];
+Cm_tilde = [0; Cm];
 
 r = @(t) deg2rad(reference_signal(t));
 r2deg = @(t) reference_signal(t);
 
 %% augmented real system
-Ap_tilde = [    0                   Cp' ;
-                    zeros(np, 1)     Ap ];
-Bp_tilde = [    0   ;   Bp  ];
-Cp_tilde = [    0   ;  Cp   ];
+Ap_tilde = [0 Cp' ;
+    zeros(np, 1) Ap ];
+Bp_tilde = [0; Bp];
+Cp_tilde = [0; Cp];
 
 Gk = 5000000 * eye(3);
 Gtheta =  10000000 * eye(2);
@@ -65,7 +65,7 @@ for i = 1: length(t)
     u(i) = K_hat(i, :) * zp(i, :)' - theta_hat(i, :) * [zp(i, 2); zp(i,3)];
 end
 
-% plots
+%% plots
 figure;
 hold on;
 fplot(r2deg, t_span, 'Linewidth', 1);
@@ -76,17 +76,17 @@ grid on;
 xlabel('time (s)');
 ylabel('angle (deg)');
 legend('$r$', '$y_m$', '$y_p$');
-% 
-% figure;
-% hold on;
-% plot(t,rad2deg(zm(:, 1)));
-% plot(t, rad2deg(zm(:, 2:3)));
-% plot(t,rad2deg(zp(:, 1)), '--');
-% plot(t, rad2deg(zp(:, 2:3)), '--');
-% hold off;
-% grid on;
-% xlabel('time (s)');
-% legend('$e_{y_mI} (deg \cdot s)$', '$x_{m_1} (deg)$', '$x_{m_2} (deg)$', '$e_{y_pI} (deg \cdot s)$', '$x_{p_1} (deg)$', '$x_{p_2} (deg)$');
+
+figure;
+hold on;
+plot(t,rad2deg(zm(:, 1)));
+plot(t, rad2deg(zm(:, 2:3)));
+plot(t,rad2deg(zp(:, 1)), '--');
+plot(t, rad2deg(zp(:, 2:3)), '--');
+hold off;
+grid on;
+xlabel('time (s)');
+legend('$e_{y_mI} (deg \cdot s)$', '$x_{m_1} (deg)$', '$x_{m_2} (deg)$', '$e_{y_pI} (deg \cdot s)$', '$x_{p_1} (deg)$', '$x_{p_2} (deg)$');
  
 figure;
 plot(t, K_hat);
@@ -99,13 +99,14 @@ plot(t, theta_hat);
 grid on;
 xlabel('time (s)');
 legend('$\hat{\theta}_1$', '$\hat{\theta}_2$');
-% 
-% % figure;
-% % plot(t, rad2deg(yp-ym));
-% % legend('$e$');
-% 
+
 % figure;
-% plot(t, rad2deg(u));
-% legend('$u$');
-% xlabel('time (s)');
-% ylabel('angle (deg)');
+% plot(t, rad2deg(yp-ym));
+% legend('$e$');
+
+figure;
+plot(t, rad2deg(u));
+grid on;
+xlabel('time (s)');
+ylabel('angle (deg)');
+legend('$u$');
