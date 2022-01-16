@@ -37,10 +37,10 @@ zm0 = [0; 0; 0];
 ym = Cm_tilde' * zm';
 
 %% augmented real system
-Ap_tilde = [    0                   Cp' ;
-                    zeros(np, 1)     Ap ];
-Bp_tilde = [    0           ;         Bp ];
-Cp_tilde = [    0           ;         Cp ];
+Ap_tilde = [0 Cp';
+    zeros(np, 1) Ap];
+Bp_tilde = [0; Bp];
+Cp_tilde = [0; Cp];
 
 % augmented real system sim
 zp0 = [0; 0; 0];
