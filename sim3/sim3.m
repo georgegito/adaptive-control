@@ -13,7 +13,7 @@ Bp = [-0.04; -4.59];
 Cp = [1; 0];
 
 % uncertainties
-D =0.5;
+D = 0.5;
 ka = -10;
 kq = -10;
 f = @(xp) ka * xp(1) + kq * xp(2);
